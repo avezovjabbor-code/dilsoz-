@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dilsoz - Zamonaviy va Aqlli Kalkulyator</title>
+  <meta name="description" content="Dilsoz - chiroyli dizaynga ega zamonaviy va qulay onlayn kalkulyator. Oddiy va ilmiy hisob-kitoblar, hisoblar tarixi va qulay interfeys.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+</head>
+<body class="dark-theme">
+  <!-- Dynamic Background Lights -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Main Container -->
+  <div class="app-wrapper">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <span>✧</span>
+        </div>
+        <div class="brand-text">
+          <h1>Dilsoz</h1>
+          <span class="badge">Kalkulyator</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Sound Effect Toggle -->
+        <button id="soundToggleBtn" class="icon-btn active-state" title="Tugma ovozi (yoqilgan)" aria-label="Ovoz">
+          <svg id="soundIconOn" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg id="soundIconOff" class="svg-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <!-- Mode Toggle (Oddiy / Muhandislik) -->
+        <button id="modeToggleBtn" class="mode-pill-btn" title="Rejimni almashtirish">
+          <span class="mode-indicator"></span>
+          <span class="mode-text">Muhandislik</span>
+        </button>
+
+        <!-- History Drawer Button -->
+        <button id="historyToggleBtn" class="icon-btn" title="Hisoblashlar tarixi" aria-label="Tarix">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="themeToggleBtn" class="icon-btn" title="Mavzuni o'zgartirish" aria-label="Mavzu">
+          <svg id="themeMoonIcon" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="themeSunIcon" class="svg-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Calculator Card -->
+    <main class="calculator-card" id="calculatorCard">
+      <!-- Screen Display -->
+      <section class="display-container" aria-label="Kalkulyator ekrani">
+        <div class="display-top-bar">
+          <span class="calc-angle-mode" id="angleModeDisplay">DEG</span>
+          <div class="display-actions">
+            <button id="copyBtn" class="subtle-btn" title="Natijani nusxalash" aria-label="Nusxalash">
+              <svg class="svg-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Nusxa</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="expression-line" id="expressionDisplay" title="Amallar ifodasi"></div>
+        <div class="main-display">
+          <span class="primary-text" id="primaryDisplay">0</span>
+        </div>
+      </section>
+
+      <!-- Keypad Area -->
+      <div class="keypad-layout">
+        <!-- Scientific Panel (Toggled via button or responsive) -->
+        <div class="scientific-panel" id="scientificPanel">
+          <button class="key func-key" data-action="toggle-angle" id="angleUnitBtn">DEG</button>
+          <button class="key func-key" data-action="func" data-value="sin">sin</button>
+          <button class="key func-key" data-action="func" data-value="cos">cos</button>
+          <button class="key func-key" data-action="func" data-value="tan">tan</button>
+          <button class="key func-key" data-action="func" data-value="log">log</button>
+          <button class="key func-key" data-action="func" data-value="ln">ln</button>
+          <button class="key func-key" data-action="insert" data-value="π">π</button>
+          <button class="key func-key" data-action="insert" data-value="e">e</button>
+          <button class="key func-key" data-action="op" data-value="^">xʸ</button>
+          <button class="key func-key" data-action="func" data-value="sqrt">√x</button>
+          <button class="key func-key" data-action="func" data-value="sqr">x²</button>
+          <button class="key func-key" data-action="func" data-value="fact">n!</button>
+          <button class="key func-key" data-action="func" data-value="inv">1/x</button>
+          <button class="key func-key" data-action="func" data-value="abs">|x|</button>
+          <button class="key func-key" data-action="insert" data-value="(">(</button>
+          <button class="key func-key" data-action="insert" data-value=")">)</button>
+        </div>
+
+        <!-- Standard Main Keypad -->
+        <div class="standard-panel">
+          <button class="key special-key" data-action="clear-all" id="clearAllBtn">AC</button>
+          <button class="key special-key" data-action="backspace" id="backspaceBtn" aria-label="O'chirish">
+            <svg class="svg-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+              <line x1="18" y1="9" x2="12" y2="15"></line>
+              <line x1="12" y1="9" x2="18" y2="15"></line>
+            </svg>
+          </button>
+          <button class="key special-key" data-action="op" data-value="%">%</button>
+          <button class="key operator-key" data-action="op" data-value="÷">÷</button>
+
+          <button class="key num-key" data-action="num" data-value="7">7</button>
+          <button class="key num-key" data-action="num" data-value="8">8</button>
+          <button class="key num-key" data-action="num" data-value="9">9</button>
+          <button class="key operator-key" data-action="op" data-value="×">×</button>
+
+          <button class="key num-key" data-action="num" data-value="4">4</button>
+          <button class="key num-key" data-action="num" data-value="5">5</button>
+          <button class="key num-key" data-action="num" data-value="6">6</button>
+          <button class="key operator-key" data-action="op" data-value="-">−</button>
+
+          <button class="key num-key" data-action="num" data-value="1">1</button>
+          <button class="key num-key" data-action="num" data-value="2">2</button>
+          <button class="key num-key" data-action="num" data-value="3">3</button>
+          <button class="key operator-key" data-action="op" data-value="+">+</button>
+
+          <button class="key special-key" data-action="toggle-sign">±</button>
+          <button class="key num-key" data-action="num" data-value="0">0</button>
+          <button class="key num-key" data-action="dot" data-value=".">.</button>
+          <button class="key equals-key" data-action="calculate" id="equalsBtn">=</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- History Drawer Sidebar -->
+    <aside class="history-drawer" id="historyDrawer">
+      <div class="history-header">
+        <h3>
+          <svg class="svg-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Hisoblar Tarixi
+        </h3>
+        <button id="closeHistoryBtn" class="icon-btn-sm" aria-label="Yopish">✕</button>
+      </div>
+
+      <div class="history-list" id="historyList">
+        <div class="empty-history">Hozircha hisoblar tarixi bo'sh</div>
+      </div>
+
+      <div class="history-footer">
+        <button id="clearHistoryBtn" class="clear-history-btn">
+          <svg class="svg-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          Tarixni tozalash
+        </button>
+      </div>
+    </aside>
+
+    <!-- Drawer Backdrop Overlay -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+
+    <!-- Quick Keyboard Help Footer -->
+    <footer class="app-footer">
+      <div class="shortcuts-hint">
+        <span><kbd>Klaviaturadan foydalanish:</kbd> Raqamlar, <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>Enter</code> (=), <code>Backspace</code>, <code>Esc</code> (AC)</span>
+      </div>
+      <p class="copyright">Dilsoz Kalkulyator &bull; Tezkor, qulay va chiroyli</p>
+    </footer>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">Nusxalandi!</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
